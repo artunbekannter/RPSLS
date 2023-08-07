@@ -1,0 +1,20 @@
+#general library
+flask
+#database library
+flask_sqlalchemy
+#Integration of flask with wtforms
+flask_wtf
+#testing library
+flask_testing
+#Different types of fields and forms used in websites i.e. buttons,lists,text fields etc..
+wtforms
+#SQL commands for python
+pymysql
+#Integration testing
+selenium 
+#General testing
+pytest
+pytest-cov
+#Environment variables integration with database passwords and names
+python-decouple
+python-dotenv

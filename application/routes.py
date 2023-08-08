@@ -1,6 +1,6 @@
 from flask import render_template, request, session
-from . import app
-from .classes import Player
+from . import app, db
+from .classes import Player, MatchHistory
 import random
 
 
@@ -8,6 +8,7 @@ import random
 def index():
     if "score" not in session:
         session["score"] = 0
+        session["computer_score"] = 0
 
     if request.method == "POST":
         user_choice = request.form["user_choice"]
@@ -18,12 +19,21 @@ def index():
         result = determine_winner(user_choice, computer_choice)
         update_score(result)
 
+        match = MatchHistory(
+            player_choice=user_choice,
+            computer_choice=computer_choice,
+            result=result,
+        )
+        db.session.add(match)
+        db.session.commit()
+
         return render_template(
             "result.html",
             user_choice=user_choice,
             computer_choice=computer_choice,
             result=result,
-            score=session["score"],
+            player_score=session["score"],
+            computer_score=session["computer_score"],
         )
 
     return render_template("index.html")
@@ -49,5 +59,15 @@ def determine_winner(player_choice, computer_choice):
 def update_score(result):
     if result == "You win!":
         session["score"] += 1
+        session["computer_score"] -= 1
     elif result == "Computer wins!":
         session["score"] -= 1
+        session["computer_score"] += 1
+
+
+@app.route("/results")
+def display_results():
+    # Query the database for all match history records
+    match_history = MatchHistory.query.all()
+
+    return render_template("results.html", match_history=match_history)

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Match History</title>
+  </head>
+  <body>
+    <h1>Match History</h1>
+    <table>
+      <tr>
+        <th>Match ID</th>
+        <th>Player Choice</th>
+        <th>Computer Choice</th>
+        <th>Result</th>
+      </tr>
+      {% for match in match_history %}
+      <tr>
+        <td>{{ match.id }}</td>
+        <td>{{ match.player_choice }}</td>
+        <td>{{ match.computer_choice }}</td>
+        <td>{{ match.result }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <a href="{{ url_for('index') }}">Play again</a>
+  </body>
+</html>

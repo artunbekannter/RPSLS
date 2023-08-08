@@ -9,8 +9,10 @@
     <h1>Game Result</h1>
     <p>Your choice: {{ user_choice }}</p>
     <p>Computer's choice: {{ computer_choice }}</p>
-    <p>{{ result }}</p>
-    <p>Score: {{ score }} </p>
+    <p>{{ game_outcome }}</p>
+    <p>Your score: {{ player_score }}</p>
+    <p>Computer score: {{ computer_score }}</p>
     <a href="{{ url_for('index') }}">Play again</a>
+    <a href="{{ url_for('display_results') }}">History</a>
   </body>
 </html>

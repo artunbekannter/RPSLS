@@ -16,7 +16,7 @@ def index():
             ["Rock", "Paper", "Scissors", "Lizard", "Spock"]
         )
 
-        result = determine_winner(user_choice, computer_choice)
+        result, message = determine_winner(user_choice, computer_choice)
         update_score(result)
 
         match = MatchHistory(
@@ -32,11 +32,29 @@ def index():
             user_choice=user_choice,
             computer_choice=computer_choice,
             result=result,
+            message=message,
             player_score=session["score"],
             computer_score=session["computer_score"],
+            
         )
 
     return render_template("index.html")
+
+
+def get_special_action(player_choice, computer_choice):
+    special_actions = {
+        ("Rock", "Scissors"): "Rock crushes Scissors",
+        ("Scissors", "Paper"): "Scissors cuts Paper",
+        ("Paper", "Rock"): "Paper covers Rock",
+        ("Rock", "Lizard"): "Rock crushes Lizard",
+        ("Lizard", "Spock"): "Lizard poisons Spock",
+        ("Spock", "Scissors"): "Spock smashes Scissors",
+        ("Scissors", "Lizard"): "Scissors decapitate Lizard",
+        ("Lizard", "Paper"): "Lizard eats Paper",
+        ("Paper", "Spock"): "Paper disproves Spock",
+        ("Spock", "Rock"): "Spock vaporizes Rock",
+    }
+    return special_actions.get((player_choice, computer_choice), None)
 
 
 def determine_winner(player_choice, computer_choice):
@@ -49,11 +67,16 @@ def determine_winner(player_choice, computer_choice):
     }
 
     if player_choice == computer_choice:
-        return "It's a tie!"
+        result = "It's a tie!"
+        message = None
     elif computer_choice in win_combinations[player_choice]:
-        return "You win!"
+        result = "You win!"
+        message = get_special_action(player_choice, computer_choice)
     else:
-        return "Computer wins!"
+        result = "Computer wins!"
+        message = get_special_action(computer_choice, player_choice)
+
+    return result, message
 
 
 def update_score(result):

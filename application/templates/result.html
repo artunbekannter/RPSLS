@@ -4,12 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RPSLS Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
   </head>
   <body>
     <h1>Game Result</h1>
     <p>Your choice: {{ user_choice }}</p>
     <p>Computer's choice: {{ computer_choice }}</p>
-    <p>{{ game_outcome }}</p>
+    <p>{{ result }}</p>
+    {% if message %}
+    <h2>{{ message }}</h2>
+    {% endif %}
     <p>Your score: {{ player_score }}</p>
     <p>Computer score: {{ computer_score }}</p>
     <a href="{{ url_for('index') }}">Play again</a>

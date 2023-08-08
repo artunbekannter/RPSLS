@@ -4,3 +4,5 @@ test.html
 application/__pycache__/__init__.cpython-311.pyc
 application/__pycache__/classes.cpython-311.pyc
 application/__pycache__/routes.cpython-311.pyc
+inspect_db.py
+instance/database.db
